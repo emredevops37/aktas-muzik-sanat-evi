@@ -1,6 +1,9 @@
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Star, Award, Sparkles } from 'lucide-react';
+import zurnaImage from '@/assets/zurna-product.jpg';
+import balabanImage from '@/assets/balaban-product.jpg';
+import meyImage from '@/assets/mey-product.jpg';
 
 const Products = () => {
   const instruments = [
@@ -15,7 +18,7 @@ const Products = () => {
         'Uzun ömürlü kullanım'
       ],
       price: '1.500 - 3.000 TL',
-      image: '/src/assets/zurna-product.jpg'
+      image: zurnaImage
     },
     {
       id: 2,
@@ -28,7 +31,7 @@ const Products = () => {
         'Zengin ton kalitesi'
       ],
       price: '2.000 - 4.000 TL',
-      image: '/src/assets/balaban-product.jpg'
+      image: balabanImage
     },
     {
       id: 3,
@@ -41,7 +44,7 @@ const Products = () => {
         'Taşıma çantası dahil'
       ],
       price: '1.800 - 3.500 TL',
-      image: '/src/assets/mey-product.jpg'
+      image: meyImage
     }
   ];
 

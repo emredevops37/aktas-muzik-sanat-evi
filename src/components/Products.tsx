@@ -15,7 +15,7 @@ const Products = () => {
         'Uzun ömürlü kullanım'
       ],
       price: '1.500 - 3.000 TL',
-      image: '/api/placeholder/400/300'
+      image: '/src/assets/zurna-product.jpg'
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ const Products = () => {
         'Zengin ton kalitesi'
       ],
       price: '2.000 - 4.000 TL',
-      image: '/api/placeholder/400/300'
+      image: '/src/assets/balaban-product.jpg'
     },
     {
       id: 3,
@@ -41,7 +41,7 @@ const Products = () => {
         'Taşıma çantası dahil'
       ],
       price: '1.800 - 3.500 TL',
-      image: '/api/placeholder/400/300'
+      image: '/src/assets/mey-product.jpg'
     }
   ];
 

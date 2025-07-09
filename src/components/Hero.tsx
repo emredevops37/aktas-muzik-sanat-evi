@@ -1,6 +1,6 @@
 import { Button } from './ui/button';
 import { ArrowDown, Star, Award, Users } from 'lucide-react';
-import heroImage from '@/assets/hero-instruments.jpg';
+import heroImage from '@/assets/hero-turkish-instruments.jpg';
 
 const Hero = () => {
   return (

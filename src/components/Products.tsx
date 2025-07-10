@@ -1,11 +1,29 @@
+import { useState } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Star, Award, Sparkles } from 'lucide-react';
+import Gallery from './Gallery';
 import zurnaImage from '@/assets/zurna-product.jpg';
 import balabanImage from '@/assets/balaban-product.jpg';
 import meyImage from '@/assets/mey-product.jpg';
+import zurnaGallery1 from '@/assets/zurna-gallery-1.jpg';
+import zurnaGallery2 from '@/assets/zurna-gallery-2.jpg';
+import zurnaGallery3 from '@/assets/zurna-gallery-3.jpg';
+import zurnaGallery4 from '@/assets/zurna-gallery-4.jpg';
 
 const Products = () => {
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [selectedInstrument, setSelectedInstrument] = useState<string>('');
+
+  const zurnaGalleryImages = [zurnaGallery1, zurnaGallery2, zurnaGallery3, zurnaGallery4];
+
+  const handleImageClick = (instrumentName: string) => {
+    if (instrumentName === 'Zurna') {
+      setSelectedInstrument(instrumentName);
+      setGalleryOpen(true);
+    }
+  };
+
   const instruments = [
     {
       id: 1,
@@ -71,13 +89,25 @@ const Products = () => {
           {instruments.map((instrument) => (
             <Card key={instrument.id} className="group overflow-hidden bg-card hover:shadow-elegant transition-all duration-500 transform hover:scale-105">
               {/* Image */}
-              <div className="relative overflow-hidden h-64">
+              <div 
+                className="relative overflow-hidden h-64 cursor-pointer"
+                onClick={() => handleImageClick(instrument.name)}
+              >
                 <img
                   src={instrument.image}
                   alt={instrument.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                {/* Galeri İkonu Zurna için */}
+                {instrument.name === 'Zurna' && (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="bg-primary/80 backdrop-blur-sm rounded-full p-3">
+                      <Sparkles className="h-6 w-6 text-primary-foreground" />
+                    </div>
+                  </div>
+                )}
                 
                 {/* Quality Badge */}
                 <div className="absolute top-4 right-4 bg-accent/90 backdrop-blur-sm rounded-full p-2">
@@ -153,6 +183,14 @@ const Products = () => {
           </Button>
         </div>
       </div>
+
+      {/* Gallery Modal */}
+      <Gallery
+        isOpen={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        title={selectedInstrument}
+        images={selectedInstrument === 'Zurna' ? zurnaGalleryImages : []}
+      />
     </section>
   );
 };

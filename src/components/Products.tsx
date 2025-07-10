@@ -10,18 +10,39 @@ import zurnaGallery1 from '@/assets/zurna-gallery-1.jpg';
 import zurnaGallery2 from '@/assets/zurna-gallery-2.jpg';
 import zurnaGallery3 from '@/assets/zurna-gallery-3.jpg';
 import zurnaGallery4 from '@/assets/zurna-gallery-4.jpg';
+import balabanGallery1 from '@/assets/balaban-gallery-1.jpg';
+import balabanGallery2 from '@/assets/balaban-gallery-2.jpg';
+import balabanGallery3 from '@/assets/balaban-gallery-3.jpg';
+import meyGallery1 from '@/assets/mey-gallery-1.jpg';
+import meyGallery2 from '@/assets/mey-gallery-2.jpg';
+import meyGallery3 from '@/assets/mey-gallery-3.jpg';
 
 const Products = () => {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [selectedInstrument, setSelectedInstrument] = useState<string>('');
 
-  const zurnaGalleryImages = [zurnaGallery1, zurnaGallery2, zurnaGallery3, zurnaGallery4];
+  const zurnaGalleryImages = [
+    { src: zurnaGallery1, title: "Zurna Detay Görünümü", description: "El işçiliği ile özenle işlenmiş geleneksel zurna" },
+    { src: zurnaGallery2, title: "Zurna Çeşitlerimiz", description: "Farklı boyut ve ahşap türlerinde zurna koleksiyonumuz" },
+    { src: zurnaGallery3, title: "Üretim Süreci", description: "Usta ellerinde şekillenen zurna yapım aşaması" },
+    { src: zurnaGallery4, title: "Profesyonel Zurna", description: "Kamış detayı ile profesyonel kalitede zurna" }
+  ];
+
+  const balabanGalleryImages = [
+    { src: balabanGallery1, title: "Balaban Detay", description: "Geleneksel Azerbaycan balaban çalgısı" },
+    { src: balabanGallery2, title: "Balaban Koleksiyonu", description: "Farklı ahşap türlerinde balaban çeşitlerimiz" },
+    { src: balabanGallery3, title: "Profesyonel Balaban", description: "Kamış sistemi ile komple balaban seti" }
+  ];
+
+  const meyGalleryImages = [
+    { src: meyGallery1, title: "Mey Çalgısı", description: "Orta Asya kökenli geleneksel mey" },
+    { src: meyGallery2, title: "Mey Çeşitleri", description: "Değişik boyutlarda mey koleksiyonumuz" },
+    { src: meyGallery3, title: "Mey Üretimi", description: "Geleneksel yöntemlerle mey yapım süreci" }
+  ];
 
   const handleImageClick = (instrumentName: string) => {
-    if (instrumentName === 'Zurna') {
-      setSelectedInstrument(instrumentName);
-      setGalleryOpen(true);
-    }
+    setSelectedInstrument(instrumentName);
+    setGalleryOpen(true);
   };
 
   const instruments = [
@@ -100,14 +121,12 @@ const Products = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
-                {/* Galeri İkonu Zurna için */}
-                {instrument.name === 'Zurna' && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-primary/80 backdrop-blur-sm rounded-full p-3">
-                      <Sparkles className="h-6 w-6 text-primary-foreground" />
-                    </div>
+                {/* Galeri İkonu */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-primary/80 backdrop-blur-sm rounded-full p-3">
+                    <Sparkles className="h-6 w-6 text-primary-foreground" />
                   </div>
-                )}
+                </div>
                 
                 {/* Quality Badge */}
                 <div className="absolute top-4 right-4 bg-accent/90 backdrop-blur-sm rounded-full p-2">
@@ -189,7 +208,11 @@ const Products = () => {
         isOpen={galleryOpen}
         onClose={() => setGalleryOpen(false)}
         title={selectedInstrument}
-        images={selectedInstrument === 'Zurna' ? zurnaGalleryImages : []}
+        images={
+          selectedInstrument === 'Zurna' ? zurnaGalleryImages :
+          selectedInstrument === 'Balaban' ? balabanGalleryImages :
+          selectedInstrument === 'Mey' ? meyGalleryImages : []
+        }
       />
     </section>
   );

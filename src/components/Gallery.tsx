@@ -3,11 +3,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
+interface GalleryImage {
+  src: string;
+  title: string;
+  description: string;
+}
+
 interface GalleryProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  images: string[];
+  images: GalleryImage[];
 }
 
 const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
@@ -38,9 +44,9 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
           {/* Ana Resim */}
           <div className="relative flex-1 bg-muted rounded-lg mx-6 mb-4 overflow-hidden">
             <img
-              src={images[currentImageIndex]}
+              src={images[currentImageIndex]?.src}
               alt={`${title} ${currentImageIndex + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
             
             {/* Navigasyon Butonları */}
@@ -65,8 +71,18 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
               </>
             )}
             
+            {/* Resim Başlık ve Açıklama */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+              <h3 className="text-white font-semibold text-lg mb-1">
+                {images[currentImageIndex]?.title}
+              </h3>
+              <p className="text-white/80 text-sm">
+                {images[currentImageIndex]?.description}
+              </p>
+            </div>
+            
             {/* Resim Sayacı */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1">
+            <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-sm font-medium">
                 {currentImageIndex + 1} / {images.length}
               </span>
@@ -88,7 +104,7 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
                     }`}
                   >
                     <img
-                      src={image}
+                      src={image.src}
                       alt={`${title} thumbnail ${index + 1}`}
                       className="w-full h-full object-cover"
                     />

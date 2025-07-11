@@ -129,7 +129,7 @@ const Products = () => {
                 
                 {/* Galeri Butonu - Alt kısımda sabit */}
                 <div 
-                  className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/95 to-primary/80 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:from-primary hover:to-primary/90"
+                  className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/40 to-primary/20 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:from-primary/70 hover:to-primary/50"
                   onClick={() => handleImageClick(instrument.name)}
                 >
                   <div className="flex items-center justify-center gap-2 py-3">

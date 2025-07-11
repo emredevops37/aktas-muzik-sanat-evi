@@ -13,7 +13,7 @@ const WhatsAppButton = () => {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
       <div className="bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg shadow-md">
         <p className="text-sm font-medium text-foreground whitespace-nowrap">
-          Yardıma ihtiyacınız mı var?
+          Yardıma ihtiyacınız var mı ?
         </p>
       </div>
       <Button

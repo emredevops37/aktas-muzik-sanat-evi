@@ -121,10 +121,13 @@ const Products = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
-                {/* Galeri İkonu */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-primary/80 backdrop-blur-sm rounded-full p-3">
+                {/* Galeri İkonu ve Tıklama İpucu */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-primary/90 backdrop-blur-sm rounded-full p-3 mb-2">
                     <Sparkles className="h-6 w-6 text-primary-foreground" />
+                  </div>
+                  <div className="bg-primary/90 backdrop-blur-sm rounded-lg px-3 py-1">
+                    <span className="text-primary-foreground text-sm font-medium">Galeriye Git</span>
                   </div>
                 </div>
                 

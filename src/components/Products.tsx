@@ -110,30 +110,32 @@ const Products = () => {
           {instruments.map((instrument) => (
             <Card key={instrument.id} className="group overflow-hidden bg-card hover:shadow-elegant transition-all duration-500 transform hover:scale-105">
               {/* Image */}
-              <div 
-                className="relative overflow-hidden h-64 cursor-pointer"
-                onClick={() => handleImageClick(instrument.name)}
-              >
-                <img
-                  src={instrument.image}
-                  alt={instrument.name}
-                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                {/* Galeri İkonu ve Tıklama İpucu */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-primary/90 backdrop-blur-sm rounded-full p-3 mb-2">
-                    <Sparkles className="h-6 w-6 text-primary-foreground" />
-                  </div>
-                  <div className="bg-primary/90 backdrop-blur-sm rounded-lg px-3 py-1">
-                    <span className="text-primary-foreground text-sm font-medium">Galeriye Git</span>
-                  </div>
+              <div className="relative overflow-hidden h-64">
+                <div 
+                  className="cursor-pointer h-full"
+                  onClick={() => handleImageClick(instrument.name)}
+                >
+                  <img
+                    src={instrument.image}
+                    alt={instrument.name}
+                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                  />
                 </div>
                 
                 {/* Quality Badge */}
                 <div className="absolute top-4 right-4 bg-accent/90 backdrop-blur-sm rounded-full p-2">
                   <Award className="h-4 w-4 text-accent-foreground" />
+                </div>
+                
+                {/* Galeri Butonu - Alt kısımda sabit */}
+                <div 
+                  className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/95 to-primary/80 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:from-primary hover:to-primary/90"
+                  onClick={() => handleImageClick(instrument.name)}
+                >
+                  <div className="flex items-center justify-center gap-2 py-3">
+                    <Sparkles className="h-4 w-4 text-primary-foreground" />
+                    <span className="text-primary-foreground text-sm font-medium">Galeriye Git</span>
+                  </div>
                 </div>
               </div>
 

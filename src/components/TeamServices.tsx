@@ -153,23 +153,23 @@ const TeamServices = () => {
             <div className="text-center p-6 bg-card rounded-xl">
               <h4 className="font-heading text-lg font-bold text-primary mb-2">Standart Paket</h4>
               <p className="text-muted-foreground text-sm mb-3">3-4 kişilik ekip</p>
-              <div className="text-accent font-heading text-xl font-bold">2.500₺'den başlar</div>
+              <div className="text-accent font-heading text-xl font-bold"></div>
             </div>
             <div className="text-center p-6 bg-accent/10 rounded-xl border-2 border-accent/30">
               <h4 className="font-heading text-lg font-bold text-primary mb-2">Premium Paket</h4>
               <p className="text-muted-foreground text-sm mb-3">5-6 kişilik ekip</p>
-              <div className="text-accent font-heading text-xl font-bold">4.000₺'den başlar</div>
+              <div className="text-accent font-heading text-xl font-bold"></div>
             </div>
             <div className="text-center p-6 bg-card rounded-xl">
               <h4 className="font-heading text-lg font-bold text-primary mb-2">Deluxe Paket</h4>
               <p className="text-muted-foreground text-sm mb-3">7-8 kişilik ekip</p>
-              <div className="text-accent font-heading text-xl font-bold">6.000₺'den başlar</div>
+              <div className="text-accent font-heading text-xl font-bold"></div>
             </div>
           </div>
 
           <div className="text-center mt-8">
             <p className="text-muted-foreground text-sm mb-4">
-              * Fiyatlar mesafe, süre ve özel taleplere göre değişkenlik gösterebilir.
+              
             </p>
             <Button 
               variant="hero"

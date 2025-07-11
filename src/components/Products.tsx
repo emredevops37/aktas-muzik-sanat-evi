@@ -22,16 +22,16 @@ const Products = () => {
   const [selectedInstrument, setSelectedInstrument] = useState<string>('');
 
   const zurnaGalleryImages = [
-    { src: zurnaGallery1, title: "Zurna Detay Görünümü", description: "El işçiliği ile özenle işlenmiş geleneksel zurna" },
-    { src: zurnaGallery2, title: "Zurna Çeşitlerimiz", description: "Farklı boyut ve ahşap türlerinde zurna koleksiyonumuz" },
-    { src: zurnaGallery3, title: "Üretim Süreci", description: "Usta ellerinde şekillenen zurna yapım aşaması" },
-    { src: zurnaGallery4, title: "Profesyonel Zurna", description: "Kamış detayı ile profesyonel kalitede zurna" }
+    { src: zurnaGallery1, title: "Zurna Takım", description: "Sol, Sol Diyez, La, Si, Do" },
+    { src: zurnaGallery2, title: "Zurna Çeşitlerimiz (La zurna)", description: "Farklı boyut ve ahşap türlerinde zurna koleksiyonumuz" },
+    { src: zurnaGallery3, title: "Üretim Süreci", description: "Usta ellerde şekillenen zurna yapım aşaması (Sol zurna)" },
+    { src: zurnaGallery4, title: "Profesyonel Zurna", description: "Kamış detayı ile profesyonel kalitede zurna (Sol Diyez)" }
   ];
 
   const balabanGalleryImages = [
     { src: balabanGallery1, title: "Balaban Detay", description: "Geleneksel Azerbaycan balaban çalgısı" },
-    { src: balabanGallery2, title: "Balaban Koleksiyonu", description: "Farklı ahşap türlerinde balaban çeşitlerimiz" },
-    { src: balabanGallery3, title: "Profesyonel Balaban", description: "Kamış sistemi ile komple balaban seti" }
+    { src: balabanGallery2, title: "Balaban Koleksiyonu", description: "Farklı türlerde balaban çeşitlerimiz" },
+    { src: balabanGallery3, title: "Profesyonel Balaban", description: "Komple balaban seti" }
   ];
 
   const meyGalleryImages = [
@@ -52,11 +52,11 @@ const Products = () => {
       description: 'Geleneksel Türk halk müziğinin vazgeçilmez nefesli çalgısı. El işçiliği ile özenle işlenmiş ahşap gövde ve kaliteli kamış ile üretilmektedir.',
       features: [
         'El işçiliği ahşap gövde',
-        'Kaliteli doğal kamış',
+        'Kaliteli doğal',
         'Geleneksel boyama teknikleri',
         'Uzun ömürlü kullanım'
       ],
-      price: '1.500 - 3.000 TL',
+      price: '',
       image: zurnaImage
     },
     {
@@ -69,7 +69,7 @@ const Products = () => {
         'Ergonomik tutuş tasarımı',
         'Zengin ton kalitesi'
       ],
-      price: '2.000 - 4.000 TL',
+      price: '',
       image: balabanImage
     },
     {
@@ -80,9 +80,9 @@ const Products = () => {
         'Geleneksel el işçiliği',
         'Doğal malzemeler',
         'Özel tuning sistemi',
-        'Taşıma çantası dahil'
+        'Ürün çeşitliliği'
       ],
-      price: '1.800 - 3.500 TL',
+      price: '',
       image: meyImage
     }
   ];
@@ -117,7 +117,7 @@ const Products = () => {
                 <img
                   src={instrument.image}
                   alt={instrument.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 

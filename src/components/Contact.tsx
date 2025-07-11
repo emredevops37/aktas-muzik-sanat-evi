@@ -1,43 +1,49 @@
-import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from 'lucide-react';
+
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
 
 const Contact = () => {
   const contactInfo = [
     {
       icon: Phone,
-      title: 'Telefon',
-      content: '+90 (555) 123 45 67',
-      subtitle: 'Hemen arayın, uzman ekibimizle konuşun'
+      title: "Telefon",
+      content: "‪+90 (533) 683 08 05‬",
+      subtitle: "Hemen arayın, uzman ekibimizle konuşun",
     },
     {
       icon: Mail,
-      title: 'E-posta',
-      content: 'info@mustafaaktas.com',
-      subtitle: 'Detaylı bilgi için e-posta gönderin'
+      title: "E-posta",
+      content: "info@mustafaaktas.com",
+      subtitle: "Detaylı bilgi için e-posta gönderin",
     },
     {
       icon: MapPin,
-      title: 'Adres',
-      content: 'Eski Mahalle, Sanatkarlar Caddesi No:15',
-      subtitle: 'İstanbul, Türkiye'
+      title: "Adres",
+      content: "",
+      subtitle: "İstanbul, Türkiye",
     },
     {
       icon: Clock,
-      title: 'Çalışma Saatleri',
-      content: 'Pazartesi - Cumartesi: 09:00 - 18:00',
-      subtitle: 'Pazar günü randevulu çalışıyoruz'
-    }
+      title: "Çalışma Saatleri",
+      content: "Pazartesi - Cumartesi: 09:00 - 18:00",
+      subtitle: "Pazar günü randevulu çalışıyoruz",
+    },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Form submission logic here
-    alert('Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz.');
+    alert(
+      "Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz."
+    );
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-muted/20 to-background">
+    <section
+      id="contact"
+      className="py-20 bg-gradient-to-br from-muted/20 to-background"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -49,27 +55,26 @@ const Contact = () => {
             Bizimle İletişime Geçin
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Ürünlerimiz, hizmetlerimiz veya özel siparişleriniz hakkında 
-            bilgi almak için bizimle iletişime geçmekten çekinmeyin.
+            Ürünlerimiz, hizmetlerimiz veya özel siparişleriniz hakkında bilgi
+            almak için bizimle iletişime geçmekten çekinmeyin.
           </p>
         </div>
 
         {/* Contact Info Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {contactInfo.map((info, index) => (
-            <Card key={index} className="p-6 text-center group hover:shadow-warm transition-all duration-300 transform hover:-translate-y-2">
+            <Card
+              key={index}
+              className="p-6 text-center group hover:shadow-warm transition-all duration-300 transform hover:-translate-y-2"
+            >
               <div className="bg-gradient-copper rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <info.icon className="h-8 w-8 text-copper-foreground" />
               </div>
               <h3 className="font-heading text-lg font-bold text-primary mb-2">
                 {info.title}
               </h3>
-              <p className="text-primary font-semibold mb-1">
-                {info.content}
-              </p>
-              <p className="text-muted-foreground text-sm">
-                {info.subtitle}
-              </p>
+              <p className="text-primary font-semibold mb-1">{info.content}</p>
+              <p className="text-muted-foreground text-sm">{info.subtitle}</p>
             </Card>
           ))}
         </div>
@@ -84,7 +89,10 @@ const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-primary mb-2"
+                  >
                     Adınız Soyadınız *
                   </label>
                   <input
@@ -96,7 +104,10 @@ const Contact = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-primary mb-2">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-primary mb-2"
+                  >
                     Telefon Numaranız *
                   </label>
                   <input
@@ -110,7 +121,10 @@ const Contact = () => {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-primary mb-2"
+                >
                   E-posta Adresiniz *
                 </label>
                 <input
@@ -123,7 +137,10 @@ const Contact = () => {
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-primary mb-2">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-medium text-primary mb-2"
+                >
                   Konu
                 </label>
                 <select
@@ -140,7 +157,10 @@ const Contact = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-primary mb-2"
+                >
                   Mesajınız *
                 </label>
                 <textarea
@@ -169,10 +189,20 @@ const Contact = () => {
                   Atölyemizi Ziyaret Edin
                 </h4>
                 <p className="text-muted-foreground text-sm">
-                  Eski Mahalle, Sanatkarlar Caddesi No:15<br />
                   İstanbul, Türkiye
+                  <br />
+                  
                 </p>
-                <Button variant="outline" className="mt-4">
+                <Button
+                  variant="outline"
+                  className="mt-4"
+                  onClick={() => {
+                    window.open(
+                      "https://www.google.com/maps/place/Maltepe%2F%C4%B0stanbul/@40.9505179,29.1041687,15z/data=!4m6!3m5!1s0x14cac4336e39827f:0x608e0ae971e8ddc2!8m2!3d40.9498022!4d29.1739513!16zL20vMDV5cF81?entry=ttu&g_ep=EgoyMDI1MDcwNy4wIKXMDSoASAFQAw%3D%3D",
+                      "_blank"
+                    );
+                  }}
+                >
                   Haritada Göster
                 </Button>
               </div>
@@ -186,18 +216,36 @@ const Contact = () => {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Phone className="h-5 w-5 text-accent-foreground" />
-                  <span className="text-accent-foreground">Acil durumlar için: +90 (555) 123 45 67</span>
+                  <span className="text-accent-foreground">
+                    Telefon : 0533 683 08 05
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <MessageCircle className="h-5 w-5 text-accent-foreground" />
-                  <span className="text-accent-foreground">WhatsApp: +90 (555) 123 45 67</span>
+                  <span className="text-accent-foreground">
+                    WhatsApp: +90 (533) 683 08 05
+                  </span>
                 </div>
               </div>
               <div className="flex gap-3 mt-6">
-                <Button variant="outline" size="sm" className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/20">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/20"
+                  onClick={() => {
+                    window.open("https://wa.me/905551234567", "_blank");
+                  }}
+                >
                   WhatsApp
                 </Button>
-                <Button variant="outline" size="sm" className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/20">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/20"
+                  onClick={() => {
+                    window.open("tel:+905551234567", "_blank");
+                  }}
+                >
                   Ara
                 </Button>
               </div>
@@ -210,16 +258,27 @@ const Contact = () => {
               </h4>
               <div className="space-y-3 text-sm">
                 <div>
-                  <strong className="text-primary">Sipariş süresi ne kadar?</strong>
-                  <p className="text-muted-foreground">Standart ürünler için 2-3 hafta, özel siparişler için 4-6 hafta.</p>
+                  <strong className="text-primary">
+                    Sipariş süresi ne kadar?
+                  </strong>
+                  <p className="text-muted-foreground">
+                    Standart ürünler için 2-3 hafta, özel siparişler için 4-6
+                    hafta.
+                  </p>
                 </div>
                 <div>
                   <strong className="text-primary">Kargo ücreti var mı?</strong>
-                  <p className="text-muted-foreground">Türkiye genelinde ücretsiz kargo hizmeti veriyoruz.</p>
+                  <p className="text-muted-foreground">
+                    Türkiye genelinde ücretsiz kargo hizmeti veriyoruz.
+                  </p>
                 </div>
                 <div>
-                  <strong className="text-primary">Davul-Zurna ekibi hangi illere gidiyor?</strong>
-                  <p className="text-muted-foreground">Türkiye'nin her yerinde hizmet veriyoruz.</p>
+                  <strong className="text-primary">
+                    Davul-Zurna ekibi hangi illere gidiyor?
+                  </strong>
+                  <p className="text-muted-foreground">
+                    Türkiye'nin her yerinde hizmet veriyoruz.
+                  </p>
                 </div>
               </div>
             </Card>
@@ -230,4 +289,5 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Contact;
+

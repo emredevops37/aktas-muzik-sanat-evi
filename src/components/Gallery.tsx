@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
-import { Button } from './ui/button';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
+import { Button } from "./ui/button";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface GalleryImage {
   src: string;
@@ -39,16 +40,16 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
             {title} Galerisi
           </DialogTitle>
         </DialogHeader>
-        
+
         <div className="flex-1 flex flex-col">
           {/* Ana Resim */}
           <div className="relative flex-1 bg-muted rounded-lg mx-6 mb-4 overflow-hidden">
             <img
               src={images[currentImageIndex]?.src}
               alt={`${title} ${currentImageIndex + 1}`}
-              className="w-full h-full object-contain"
+              className="w-full  max-h-[69vh] object-contain"
             />
-            
+
             {/* Navigasyon Butonları */}
             {images.length > 1 && (
               <>
@@ -70,7 +71,7 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
                 </Button>
               </>
             )}
-            
+
             {/* Resim Başlık ve Açıklama */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
               <h3 className="text-white font-semibold text-lg mb-1">
@@ -80,7 +81,7 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
                 {images[currentImageIndex]?.description}
               </p>
             </div>
-            
+
             {/* Resim Sayacı */}
             <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1">
               <span className="text-sm font-medium">
@@ -88,7 +89,7 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
               </span>
             </div>
           </div>
-          
+
           {/* Thumbnail'lar */}
           {images.length > 1 && (
             <div className="px-6 pb-6">
@@ -99,8 +100,8 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
                     onClick={() => goToImage(index)}
                     className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all ${
                       index === currentImageIndex
-                        ? 'border-primary shadow-lg'
-                        : 'border-border hover:border-primary/50'
+                        ? "border-primary shadow-lg"
+                        : "border-border hover:border-primary/50"
                     }`}
                   >
                     <img
@@ -119,4 +120,5 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
   );
 };
 
-export default Gallery;
+export default Gallery;
+

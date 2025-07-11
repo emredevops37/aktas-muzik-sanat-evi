@@ -78,9 +78,9 @@ const Footer = () => {
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-accent flex-shrink-0 mt-0.5" />
-                <span className="text-primary-foreground/80 text-sm">
-                  Eski Mahalle, Sanatkarlar Caddesi No:15<br />
-                  İstanbul, Türkiye
+                <span className="text-primary-foreground/80 text-sm">İstanbul, Türkiye
+                  <br />
+                  
                 </span>
               </div>
             </div>

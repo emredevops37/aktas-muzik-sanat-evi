@@ -32,7 +32,7 @@ const Hero = () => {
                 <span className="block text-accent-glow">Müzik Aletleri</span>
               </h1>
               <p className="mt-6 text-lg md:text-xl text-primary-foreground/90 leading-relaxed max-w-2xl">
-                Geleneksel Türk müzik kültürünün vazgeçilmez aletleri zurna, balaban ve mey'i 
+                Geleneksel Türk müzik kültürünün vazgeçilmez aletleri Zurna, Balaban ve Mey'i 
                 ustaca el işçiliği ile üretiyoruz. Ayrıca düğün ve organizasyonlarınız için 
                 profesyonel Davul-Zurna ekibimizle hizmetinizdeyiz.
               </p>

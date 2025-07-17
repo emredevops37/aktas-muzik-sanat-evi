@@ -108,6 +108,32 @@ const About = () => {
           </div>
         </div>
 
+        {/* Video Section */}
+        <div className="mb-20">
+          <div className="text-center mb-8">
+            <h3 className="font-heading text-2xl font-bold text-primary mb-4">
+              Atölyemizden Görüntüler
+            </h3>
+            <p className="text-muted-foreground">
+              Geleneksel müzik aletlerimizin üretim sürecini ve atölyemizi keşfedin
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="relative rounded-2xl overflow-hidden shadow-elegant bg-card border border-border">
+              <div className="aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/2dyOTdwqB2U"
+                  title="Mustafa Aktaş Müzik Aletleri - Atölye Tanıtım Videosu"
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Values */}
         <div className="mb-20">
           <h3 className="font-heading text-2xl font-bold text-primary text-center mb-12">

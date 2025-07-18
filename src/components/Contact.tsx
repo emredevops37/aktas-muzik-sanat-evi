@@ -14,7 +14,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: "E-posta",
-      content: "info@mustafaaktas.com",
+      content: "emrkts37@gmail.com",
       subtitle: "Detaylı bilgi için e-posta gönderin",
     },
     {
@@ -198,8 +198,7 @@ const Contact = () => {
                   className="mt-4"
                   onClick={() => {
                     window.open(
-                      "https://www.google.com/maps/place/Maltepe%2F%C4%B0stanbul/@40.9505179,29.1041687,15z/data=!4m6!3m5!1s0x14cac4336e39827f:0x608e0ae971e8ddc2!8m2!3d40.9498022!4d29.1739513!16zL20vMDV5cF81?entry=ttu&g_ep=EgoyMDI1MDcwNy4wIKXMDSoASAFQAw%3D%3D",
-                      "_blank"
+                      "https://www.google.com/maps/place/Havaalan%C4%B1,+34230+Esenler%2F%C4%B0stanbul/@41.0580665,28.8632993,15.75z/data=!4m6!3m5!1s0x14cabaa894f4d6ff:0x21ed7f7d3d0901fa!8m2!3d41.0579!4d28.8696819!16s%2Fg%2F1thbgm7k?entry=ttu&g_ep=EgoyMDI1MDcxNS4xIKXMDSoASAFQAw%3D%3D"
                     );
                   }}
                 >

@@ -30,7 +30,7 @@ const About = () => {
     { year: '2005', event: 'İlk profesyonel müzisyen siparişleri' },
     { year: '2010', event: 'Davul-Zurna ekibinin oluşturulması' },
     { year: '2015', event: '1000+ müzik aleti üretim milestonu' },
-    { year: '2020', event: 'Online satış platformunun kurulması' },
+    { year: '2020', event: 'Online platformunun kurulması' },
     { year: '2024', event: 'Yeni nesil çırakların yetiştirilmeye başlanması' }
   ];
 

@@ -28,7 +28,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/aktas-muzik-sanat-evi/", // GitHub Pages için gerekli
+  base: "/", // GitHub Pages için gerekli
   server: {
     host: "::",
     port: 8080,

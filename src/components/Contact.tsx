@@ -2,8 +2,36 @@
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { useToast } from './ui/use-toast';
+
+const formSchema = z.object({
+  name: z.string().min(2, 'İsim en az 2 karakter olmalıdır').max(50, 'İsim 50 karakterden fazla olamaz'),
+  phone: z.string().min(10, 'Telefon numarası en az 10 haneli olmalıdır').max(15, 'Telefon numarası 15 haneden fazla olamaz'),
+  email: z.string().email('Geçerli bir email adresi giriniz'),
+  subject: z.string().min(1, 'Konu seçimi zorunludur'),
+  message: z.string().min(10, 'Mesaj en az 10 karakter olmalıdır').max(500, 'Mesaj 500 karakterden fazla olamaz'),
+});
 
 const Contact = () => {
+  const { toast } = useToast();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      phone: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+  });
+
   const contactInfo = [
     {
       icon: Phone,
@@ -31,12 +59,22 @@ const Contact = () => {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Form submission logic here
-    alert(
-      "Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz."
-    );
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // Sanitize values before processing
+    const sanitizedValues = {
+      name: values.name.trim(),
+      phone: values.phone.replace(/[^\d+\-\s]/g, ''),
+      email: values.email.trim().toLowerCase(),
+      subject: values.subject,
+      message: values.message.trim(),
+    };
+    
+    console.log('Form submission:', sanitizedValues);
+    toast({
+      title: "Mesajınız alınmıştır!",
+      description: "En kısa sürede dönüş yapacağız.",
+    });
+    form.reset();
   };
 
   return (
@@ -86,97 +124,121 @@ const Contact = () => {
             <h3 className="font-heading text-2xl font-bold text-primary mb-6">
               Mesaj Gönderin
             </h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-primary mb-2"
-                  >
-                    Adınız Soyadınız *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300 bg-background"
-                    placeholder="Adınızı girin"
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Adınız Soyadınız *</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Adınızı girin"
+                            className="px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Telefon Numaranız *</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="tel" 
+                            placeholder="0555 123 45 67"
+                            className="px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-primary mb-2"
-                  >
-                    Telefon Numaranız *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    required
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300 bg-background"
-                    placeholder="0555 123 45 67"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-primary mb-2"
-                >
-                  E-posta Adresiniz *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  required
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300 bg-background"
-                  placeholder="ornek@email.com"
+                
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-posta Adresiniz *</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="email" 
+                          placeholder="ornek@email.com"
+                          className="px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300"
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
 
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm font-medium text-primary mb-2"
-                >
-                  Konu
-                </label>
-                <select
-                  id="subject"
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300 bg-background"
-                >
-                  <option value="">Konu seçin</option>
-                  <option value="product">Ürün Bilgisi</option>
-                  <option value="order">Sipariş Vermek İstiyorum</option>
-                  <option value="team">Davul-Zurna Ekibi</option>
-                  <option value="custom">Özel Sipariş</option>
-                  <option value="other">Diğer</option>
-                </select>
-              </div>
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Konu</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300">
+                            <SelectValue placeholder="Konu seçin" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="product">Ürün Bilgisi</SelectItem>
+                          <SelectItem value="order">Sipariş Vermek İstiyorum</SelectItem>
+                          <SelectItem value="team">Davul-Zurna Ekibi</SelectItem>
+                          <SelectItem value="custom">Özel Sipariş</SelectItem>
+                          <SelectItem value="other">Diğer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-primary mb-2"
-                >
-                  Mesajınız *
-                </label>
-                <textarea
-                  id="message"
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300 bg-background resize-none"
-                  placeholder="Mesajınızı buraya yazın..."
-                ></textarea>
-              </div>
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Mesajınız *</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Mesajınızı buraya yazın..."
+                          rows={5}
+                          className="px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors duration-300 resize-none"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <Button type="submit" variant="hero" size="lg" className="w-full">
-                <Send className="mr-2 h-5 w-5" />
-                Mesajı Gönder
-              </Button>
-            </form>
+                <Button 
+                  type="submit" 
+                  variant="hero" 
+                  size="lg" 
+                  className="w-full" 
+                  disabled={form.formState.isSubmitting}
+                >
+                  <Send className="mr-2 h-5 w-5" />
+                  Mesajı Gönder
+                </Button>
+              </form>
+            </Form>
           </Card>
 
           {/* Map and Additional Info */}
@@ -198,7 +260,9 @@ const Contact = () => {
                   className="mt-4"
                   onClick={() => {
                     window.open(
-                      "https://www.google.com/maps/place/Havaalan%C4%B1,+34230+Esenler%2F%C4%B0stanbul/@41.0580665,28.8632993,15.75z/data=!4m6!3m5!1s0x14cabaa894f4d6ff:0x21ed7f7d3d0901fa!8m2!3d41.0579!4d28.8696819!16s%2Fg%2F1thbgm7k?entry=ttu&g_ep=EgoyMDI1MDcxNS4xIKXMDSoASAFQAw%3D%3D"
+                      "https://www.google.com/maps/place/Havaalan%C4%B1,+34230+Esenler%2F%C4%B0stanbul/@41.0580665,28.8632993,15.75z/data=!4m6!3m5!1s0x14cabaa894f4d6ff:0x21ed7f7d3d0901fa!8m2!3d41.0579!4d28.8696819!16s%2Fg%2F1thbgm7k?entry=ttu&g_ep=EgoyMDI1MDcxNS4xIKXMDSoASAFQAw%3D%3D",
+                      "_blank",
+                      "noopener,noreferrer"
                     );
                   }}
                 >
@@ -232,7 +296,7 @@ const Contact = () => {
                   size="sm"
                   className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/20"
                   onClick={() => {
-                    window.open("https://wa.me/905551234567", "_blank");
+                    window.open("https://wa.me/905336830805", "_blank", "noopener,noreferrer");
                   }}
                 >
                   WhatsApp
@@ -242,7 +306,7 @@ const Contact = () => {
                   size="sm"
                   className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/20"
                   onClick={() => {
-                    window.open("tel:+905551234567", "_blank");
+                    window.open("tel:+905336830805");
                   }}
                 >
                   Ara

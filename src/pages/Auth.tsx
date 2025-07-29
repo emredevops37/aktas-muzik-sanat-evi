@@ -44,17 +44,25 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
-        toast({
-          title: "Giriş Hatası",
-          description: error.message,
-          variant: "destructive",
-        });
+        if (error.message.includes('Invalid login credentials')) {
+          toast({
+            title: "Giriş Hatası",
+            description: "Email veya şifre hatalı.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Giriş Hatası",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
       } else {
         toast({
           title: "Başarılı",
@@ -77,25 +85,40 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/admin`
+          emailRedirectTo: `${window.location.origin}/auth`
         }
       });
 
       if (error) {
-        toast({
-          title: "Kayıt Hatası",
-          description: error.message,
-          variant: "destructive",
-        });
+        if (error.message.includes('already registered')) {
+          toast({
+            title: "Kullanıcı Zaten Kayıtlı",
+            description: "Bu email adresi ile zaten kayıt olunmuş. Giriş yapmayı deneyin.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Kayıt Hatası",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
       } else {
-        toast({
-          title: "Başarılı",
-          description: "Kayıt işlemi tamamlandı. Email doğrulama linkini kontrol edin.",
-        });
+        if (data.user && !data.session) {
+          toast({
+            title: "Email Doğrulama Gerekli",
+            description: "Email doğrulama linkini kontrol edin.",
+          });
+        } else {
+          toast({
+            title: "Başarılı",
+            description: "Kayıt işlemi tamamlandı.",
+          });
+        }
       }
     } catch (error: any) {
       toast({

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Star, Award, Sparkles } from 'lucide-react';
 import Gallery from './Gallery';
+import { supabase } from '@/integrations/supabase/client';
 import zurnaImage from '@/assets/zurna-product.jpg';
 import balabanImage from '@/assets/balaban-product.jpg';
 import meyImage from '@/assets/mey-product.jpg';
@@ -17,9 +18,30 @@ import meyGallery1 from '@/assets/mey-gallery-1.jpg';
 import meyGallery2 from '@/assets/mey-gallery-2.jpg';
 import meyGallery3 from '@/assets/mey-gallery-3.jpg';
 
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  features: string[];
+  price: string;
+  image?: string;
+}
+
+interface ProductImage {
+  id: string;
+  product_id: string;
+  image_url: string;
+  title: string;
+  description: string;
+  is_main: boolean;
+}
+
 const Products = () => {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [selectedInstrument, setSelectedInstrument] = useState<string>('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productImages, setProductImages] = useState<ProductImage[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const zurnaGalleryImages = [
     { src: zurnaGallery1, title: "Zurna Takım", description: "Sol, Sol Diyez, La, Si, Do" },
@@ -40,14 +62,69 @@ const Products = () => {
     { src: meyGallery3, title: "Mey Üretimi", description: "Geleneksel yöntemlerle mey yapım süreci" }
   ];
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      // Fetch products
+      const { data: productsData, error: productsError } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (productsError) throw productsError;
+
+      // Fetch product images
+      const { data: imagesData, error: imagesError } = await supabase
+        .from('product_images')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (imagesError) throw imagesError;
+
+      setProducts(productsData || []);
+      setProductImages(imagesData || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleImageClick = (instrumentName: string) => {
     setSelectedInstrument(instrumentName);
     setGalleryOpen(true);
   };
 
-  const instruments = [
+  const getMainImageForProduct = (productId: string): string => {
+    const mainImage = productImages.find(img => img.product_id === productId && img.is_main);
+    if (mainImage) return mainImage.image_url;
+    
+    const anyImage = productImages.find(img => img.product_id === productId);
+    if (anyImage) return anyImage.image_url;
+    
+    return zurnaImage; // fallback
+  };
+
+  const getGalleryImagesForProduct = (productName: string) => {
+    const product = products.find(p => p.name === productName);
+    if (!product) return [];
+    
+    return productImages
+      .filter(img => img.product_id === product.id)
+      .map(img => ({
+        src: img.image_url,
+        title: img.title || productName,
+        description: img.description || `${productName} görseli`
+      }));
+  };
+
+  // Fallback data if no products in database
+  const fallbackProducts = [
     {
-      id: 1,
+      id: 'fallback-1',
       name: 'Zurna',
       description: 'Geleneksel Türk halk müziğinin vazgeçilmez nefesli çalgısı. El işçiliği ile özenle işlenmiş ahşap gövde ve kaliteli kamış ile üretilmektedir.',
       features: [
@@ -60,7 +137,7 @@ const Products = () => {
       image: zurnaImage
     },
     {
-      id: 2,
+      id: 'fallback-2',
       name: 'Balaban',
       description: 'Azerbaycan ve Türk müzik kültürünün önemli çalgılarından biri. Derin ve melodik sesi ile dinleyicileri büyüler.',
       features: [
@@ -73,7 +150,7 @@ const Products = () => {
       image: balabanImage
     },
     {
-      id: 3,
+      id: 'fallback-3',
       name: 'Mey',
       description: 'Orta Asya kökenli bu güzel çalgı, sıcak ve duygusal tınısı ile halk müziğimizin vazgeçilmez parçasıdır.',
       features: [
@@ -86,6 +163,8 @@ const Products = () => {
       image: meyImage
     }
   ];
+
+  const displayProducts = products.length > 0 ? products : fallbackProducts;
 
   return (
     <section id="products" className="py-20 bg-background">
@@ -106,8 +185,13 @@ const Products = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {instruments.map((instrument) => (
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Ürünler yükleniyor...</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayProducts.map((instrument) => (
             <Card key={instrument.id} className="group overflow-hidden bg-card hover:shadow-elegant transition-all duration-500 transform hover:scale-105">
               {/* Image */}
               <div className="relative overflow-hidden h-64">
@@ -115,11 +199,11 @@ const Products = () => {
                   className="cursor-pointer h-full"
                   onClick={() => handleImageClick(instrument.name)}
                 >
-                  <img
-                    src={instrument.image}
-                    alt={instrument.name}
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                  />
+                   <img
+                     src={instrument.image || getMainImageForProduct(instrument.id)}
+                     alt={instrument.name}
+                     className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                   />
                 </div>
                 
                 {/* Quality Badge */}
@@ -187,7 +271,8 @@ const Products = () => {
               </div>
             </Card>
           ))}
-        </div>
+          </div>
+        )}
 
         {/* Additional Info */}
         <div className="mt-16 text-center bg-muted rounded-2xl p-8">
@@ -214,9 +299,11 @@ const Products = () => {
         onClose={() => setGalleryOpen(false)}
         title={selectedInstrument}
         images={
-          selectedInstrument === 'Zurna' ? zurnaGalleryImages :
-          selectedInstrument === 'Balaban' ? balabanGalleryImages :
-          selectedInstrument === 'Mey' ? meyGalleryImages : []
+          getGalleryImagesForProduct(selectedInstrument).length > 0 
+            ? getGalleryImagesForProduct(selectedInstrument)
+            : selectedInstrument === 'Zurna' ? zurnaGalleryImages :
+              selectedInstrument === 'Balaban' ? balabanGalleryImages :
+              selectedInstrument === 'Mey' ? meyGalleryImages : []
         }
       />
     </section>

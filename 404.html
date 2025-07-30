@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <title>Yönlendirme</title>
     <script>
-      sessionStorage.redirect = location.pathname;
+      // URL'de /auth varsa direkt aç, yoksa ana sayfaya git
+      if (window.location.pathname === '/auth') {
+        window.history.replaceState({}, '', '/auth');
+        window.location.href = '/auth';
+      } else {
+        window.location.href = '/';
+      }
     </script>
-    <meta http-equiv="refresh" content="0;URL=/" />
   </head>
   <body></body>
 </html>

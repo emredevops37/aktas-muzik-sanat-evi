@@ -10,6 +10,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useToast } from './ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const formSchema = z.object({
   name: z.string().min(2, 'İsim en az 2 karakter olmalıdır').max(50, 'İsim 50 karakterden fazla olamaz'),
@@ -59,22 +60,47 @@ const Contact = () => {
     },
   ];
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Sanitize values before processing
-    const sanitizedValues = {
-      name: values.name.trim(),
-      phone: values.phone.replace(/[^\d+\-\s]/g, ''),
-      email: values.email.trim().toLowerCase(),
-      subject: values.subject,
-      message: values.message.trim(),
-    };
-    
-    console.log('Form submission:', sanitizedValues);
-    toast({
-      title: "Mesajınız alınmıştır!",
-      description: "En kısa sürede dönüş yapacağız.",
-    });
-    form.reset();
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      // Sanitize values before processing
+      const sanitizedValues = {
+        name: values.name.trim(),
+        phone: values.phone.replace(/[^\d+\-\s]/g, ''),
+        email: values.email.trim().toLowerCase(),
+        subject: values.subject,
+        message: values.message.trim(),
+      };
+      
+      console.log('Form submission:', sanitizedValues);
+
+      // Supabase edge function'ı çağır
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: sanitizedValues
+      });
+
+      if (error) {
+        console.error("Error sending contact message:", error);
+        toast({
+          title: "Hata!",
+          description: "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Mesajınız alınmıştır!",
+        description: "En kısa sürede dönüş yapacağız.",
+      });
+      form.reset();
+    } catch (error) {
+      console.error("Error:", error);
+      toast({
+        title: "Hata!",
+        description: "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

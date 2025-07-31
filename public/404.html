@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Yönlendirme</title>
+    <script>
+      // Sadece /auth veya /admin için çalışacak mantık
+      const allowedRoutes = ['/auth', '/admin'];
+      const currentPath = window.location.pathname;
+      
+      if (allowedRoutes.includes(currentPath)) {
+        // SessionStorage'e kaydet ve index.html'e yönlendir
+        sessionStorage.setItem('redirect', currentPath);
+        window.location.href = '/';
+      } else {
+        // Diğer 404 hataları için ana sayfaya git
+        window.location.replace('/');
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

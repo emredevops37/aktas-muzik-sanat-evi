@@ -10,7 +10,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useToast } from './ui/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import emailjs from '@emailjs/browser';
 
 const formSchema = z.object({
   name: z.string().min(2, 'İsim en az 2 karakter olmalıdır').max(50, 'İsim 50 karakterden fazla olamaz'),
@@ -61,43 +61,42 @@ const Contact = () => {
   ];
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    // Sanitize values before processing
+    const sanitizedValues = {
+      name: values.name.trim(),
+      phone: values.phone.replace(/[^\d+\-\s]/g, ''),
+      email: values.email.trim().toLowerCase(),
+      subject: values.subject,
+      message: values.message.trim(),
+    };
+    
     try {
-      // Sanitize values before processing
-      const sanitizedValues = {
-        name: values.name.trim(),
-        phone: values.phone.replace(/[^\d+\-\s]/g, ''),
-        email: values.email.trim().toLowerCase(),
-        subject: values.subject,
-        message: values.message.trim(),
-      };
-      
-      console.log('Form submission:', sanitizedValues);
+      // EmailJS ile email gönderimi
+      const result = await emailjs.send(
+        'service_k83tjy8', // EmailJS'den alacağınız Service ID
+        'template_s7113j9', // EmailJS'den alacağınız Template ID
+        {
+          from_name: sanitizedValues.name,
+          email: sanitizedValues.email,
+          phone: sanitizedValues.phone,
+          subject: sanitizedValues.subject,
+          message: sanitizedValues.message
+          // to_email: 'emrkts37@gmail.com'
+        },
+        '2MEg4k2QVJUFcqlCh' // EmailJS'den alacağınız Public Key
+      );
 
-      // Supabase edge function'ı çağır
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: sanitizedValues
-      });
-
-      if (error) {
-        console.error("Error sending contact message:", error);
-        toast({
-          title: "Hata!",
-          description: "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
-          variant: "destructive",
-        });
-        return;
-      }
-
+      console.log('Email sent successfully:', result);
       toast({
-        title: "Mesajınız alınmıştır!",
+        title: "Mesajınız başarıyla gönderildi!",
         description: "En kısa sürede dönüş yapacağız.",
       });
       form.reset();
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Email sending failed:', error);
       toast({
-        title: "Hata!",
-        description: "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        title: "Mesaj gönderilemedi!",
+        description: "Lütfen daha sonra tekrar deneyin veya telefon ile iletişime geçin.",
         variant: "destructive",
       });
     }
@@ -222,11 +221,11 @@ const Contact = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="product">Ürün Bilgisi</SelectItem>
-                          <SelectItem value="order">Sipariş Vermek İstiyorum</SelectItem>
-                          <SelectItem value="team">Davul-Zurna Ekibi</SelectItem>
-                          <SelectItem value="custom">Özel Sipariş</SelectItem>
-                          <SelectItem value="other">Diğer</SelectItem>
+                          <SelectItem value="Ürün Bilgisi">Ürün Bilgisi</SelectItem>
+                          <SelectItem value="Sipariş Vermek İstiyorum">Sipariş Vermek İstiyorum</SelectItem>
+                          <SelectItem value="Davul-Zurna Ekibi">Davul-Zurna Ekibi</SelectItem>
+                          <SelectItem value="Özel Sipariş">Özel Sipariş</SelectItem>
+                          <SelectItem value="Diğer">Diğer</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />

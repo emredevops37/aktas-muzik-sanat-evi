@@ -11,7 +11,7 @@ const Header = () => {
     { name: 'Davul-Zurna Ekibi', href: '#team' },
     { name: 'Hakkımızda', href: '#about' },
     { name: 'İletişim', href: '#contact' },
-    { name: 'Admin', href: '/auth' },
+    // { name: 'Admin', href: '/auth' },
   ];
 
   return (

@@ -6,7 +6,11 @@
     <title>Mustafa Aktaş Müzik Aletleri - El İşçiliği Zurna, Balaban, Mey</title>
     <meta name="description" content="Geleneksel Türk müzik aletleri üretimi. El işçiliği ile zurna, balaban ve mey yapımı. Davul-Zurna ekibi hizmetleri." />
     <meta name="author" content="Mustafa Aktaş Müzik Aletleri" />
-    
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <!-- <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" /> -->
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,5 +29,8 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+    sessionStorage.setItem('redirect', window.location.pathname);
+    </script>
   </body>
 </html>

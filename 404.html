@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <title>Yönlendirme</title>
     <script>
-      const redirect = sessionStorage.getItem('redirect');
-      sessionStorage.removeItem('redirect');
-      if (redirect && redirect !== location.pathname) {
-        history.replaceState(null, null, redirect);
+      // Sadece /auth veya /admin için çalışacak mantık
+      const allowedRoutes = ['/auth', '/admin'];
+      const currentPath = window.location.pathname;
+      
+      if (allowedRoutes.includes(currentPath)) {
+        // SessionStorage'e kaydet ve index.html'e yönlendir
+        sessionStorage.setItem('redirect', currentPath);
+        window.location.href = '/';
+      } else {
+        // Diğer 404 hataları için ana sayfaya git
+        window.location.replace('/');
       }
     </script>
-    <meta http-equiv="refresh" content="0;URL='/'" />
   </head>
+  <body></body>
 </html>

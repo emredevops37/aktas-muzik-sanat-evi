@@ -93,24 +93,26 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
           {/* Thumbnail'lar */}
           {images.length > 1 && (
             <div className="px-6 pb-6">
-              <div className="flex gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent max-w-full">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToImage(index)}
-                    className={`flex-shrink-0 w-14 h-14 rounded-md overflow-hidden border-2 transition-all ${
-                      index === currentImageIndex
-                        ? "border-primary shadow-lg"
-                        : "border-border hover:border-primary/50"
-                    }`}
-                  >
-                    <img
-                      src={image.src}
-                      alt={`${title} thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+              <div className="flex gap-1.5 overflow-x-auto pb-2" style={{ scrollbarWidth: 'thin' }}>
+                <div className="flex gap-1.5 min-w-fit">
+                  {images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToImage(index)}
+                      className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                        index === currentImageIndex
+                          ? "border-primary shadow-lg scale-105"
+                          : "border-border hover:border-primary/50 hover:scale-105"
+                      }`}
+                    >
+                      <img
+                        src={image.src}
+                        alt={`${title} thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}

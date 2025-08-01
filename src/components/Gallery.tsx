@@ -93,13 +93,13 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
           {/* Thumbnail'lar */}
           {images.length > 1 && (
             <div className="px-6 pb-6">
-              <div className="flex gap-1.5 overflow-x-auto pb-2" style={{ scrollbarWidth: 'thin' }}>
-                <div className="flex gap-1.5 min-w-fit">
+              <div className="overflow-x-auto">
+                <div className="flex gap-1.5 pb-2" style={{ scrollbarWidth: 'thin' }}>
                   {images.map((image, index) => (
                     <button
                       key={index}
                       onClick={() => goToImage(index)}
-                      className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                      className={`flex-shrink-0 w-10 h-10 rounded-md overflow-hidden border-2 transition-all ${
                         index === currentImageIndex
                           ? "border-primary shadow-lg scale-105"
                           : "border-border hover:border-primary/50 hover:scale-105"

@@ -93,12 +93,12 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
           {/* Thumbnail'lar */}
           {images.length > 1 && (
             <div className="px-6 pb-6">
-              <div className="flex gap-2 overflow-x-auto">
+              <div className="flex gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent max-w-full">
                 {images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => goToImage(index)}
-                    className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 w-14 h-14 rounded-md overflow-hidden border-2 transition-all ${
                       index === currentImageIndex
                         ? "border-primary shadow-lg"
                         : "border-border hover:border-primary/50"

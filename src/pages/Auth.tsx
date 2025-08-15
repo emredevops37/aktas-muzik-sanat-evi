@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, LogIn, UserPlus } from 'lucide-react';
+import { Loader2, LogIn, UserPlus, KeyRound } from 'lucide-react';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -131,6 +131,38 @@ const Auth = () => {
     }
   };
 
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth`,
+      });
+
+      if (error) {
+        toast({
+          title: "Şifre Sıfırlama Hatası",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Email Gönderildi",
+          description: "Şifre sıfırlama linki email adresinize gönderildi.",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Hata",
+        description: "Beklenmeyen bir hata oluştu.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (user) {
     return null; // Will redirect to admin
   }
@@ -146,7 +178,7 @@ const Auth = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="signin" className="flex items-center gap-2">
                 <LogIn className="h-4 w-4" />
                 Giriş
@@ -154,6 +186,10 @@ const Auth = () => {
               <TabsTrigger value="signup" className="flex items-center gap-2">
                 <UserPlus className="h-4 w-4" />
                 Kayıt
+              </TabsTrigger>
+              <TabsTrigger value="reset" className="flex items-center gap-2">
+                <KeyRound className="h-4 w-4" />
+                Şifre Sıfırla
               </TabsTrigger>
             </TabsList>
             
@@ -217,6 +253,29 @@ const Auth = () => {
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Kayıt Ol
                 </Button>
+              </form>
+            </TabsContent>
+            
+            <TabsContent value="reset">
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="reset-email">Email</Label>
+                  <Input
+                    id="reset-email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@example.com"
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Şifre Sıfırlama Linki Gönder
+                </Button>
+                <p className="text-sm text-muted-foreground text-center">
+                  Email adresinize şifre sıfırlama linki gönderilecek.
+                </p>
               </form>
             </TabsContent>
           </Tabs>

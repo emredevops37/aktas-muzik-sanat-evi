@@ -93,26 +93,24 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
           {/* Thumbnail'lar */}
           {images.length > 1 && (
             <div className="px-6 pb-6">
-              <div className="overflow-x-auto">
-                <div className="flex gap-1.5 pb-2" style={{ scrollbarWidth: 'thin' }}>
-                  {images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToImage(index)}
-                      className={`flex-shrink-0 w-10 h-10 rounded-md overflow-hidden border-2 transition-all ${
-                        index === currentImageIndex
-                          ? "border-primary shadow-lg scale-105"
-                          : "border-border hover:border-primary/50 hover:scale-105"
-                      }`}
-                    >
-                      <img
-                        src={image.src}
-                        alt={`${title} thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
+              <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20">
+                {images.map((image, index) => (
+                  <button
+                    key={`thumbnail-${index}`}
+                    onClick={() => goToImage(index)}
+                    className={`flex-shrink-0 w-10 h-10 rounded-md overflow-hidden border-2 transition-all ${
+                      index === currentImageIndex
+                        ? "border-primary shadow-lg scale-105"
+                        : "border-border hover:border-primary/50 hover:scale-105"
+                    }`}
+                  >
+                    <img
+                      src={image.src}
+                      alt={`${title} thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
               </div>
             </div>
           )}
@@ -122,5 +120,4 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
   );
 };
 
-export default Gallery;
-
+export default Gallery;

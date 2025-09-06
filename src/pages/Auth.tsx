@@ -25,13 +25,16 @@ const Auth = () => {
   useEffect(() => {
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session check:', session);
       if (session?.user) {
         setUser(session.user);
-        // Check if this is a recovery session
-        const isRecovery = session.user.recovery_sent_at !== undefined;
+        // Check if this is a recovery session by checking the session event
+        const url = new URL(window.location.href);
+        const isRecovery = url.searchParams.get('type') === 'recovery';
         setIsRecoverySession(isRecovery);
         
         if (!isRecovery) {
+          console.log('Navigating to admin');
           navigate('/admin');
         }
       }
@@ -39,14 +42,16 @@ const Auth = () => {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event, session);
       if (event === 'PASSWORD_RECOVERY') {
         setIsRecoverySession(true);
         setUser(session?.user || null);
-      } else if (session?.user) {
+      } else if (event === 'SIGNED_IN' && session?.user) {
         setUser(session.user);
         setIsRecoverySession(false);
+        console.log('User signed in, navigating to admin');
         navigate('/admin');
-      } else {
+      } else if (event === 'SIGNED_OUT') {
         setUser(null);
         setIsRecoverySession(false);
       }

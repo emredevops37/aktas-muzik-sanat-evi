@@ -22,9 +22,13 @@ const Admin = () => {
 
   const checkAuth = async () => {
     try {
+      console.log('Admin: Checking authentication...');
       const { data: { session } } = await supabase.auth.getSession();
       
+      console.log('Admin: Session data:', session);
+      
       if (!session?.user) {
+        console.log('Admin: No user session, redirecting to auth');
         navigate('/auth');
         return;
       }
@@ -32,12 +36,15 @@ const Admin = () => {
       setUser(session.user);
 
       // Check if user is admin
+      console.log('Admin: Checking admin role for user:', session.user.id);
       const { data: roleData, error } = await supabase
         .from('user_roles')
         .select('role')
         .eq('user_id', session.user.id)
         .eq('role', 'admin')
         .single();
+
+      console.log('Admin: Role check result:', { roleData, error });
 
       if (error && error.code !== 'PGRST116') {
         console.error('Error checking admin role:', error);
@@ -51,12 +58,15 @@ const Admin = () => {
       setIsAdmin(!!roleData);
       
       if (!roleData) {
+        console.log('Admin: User is not admin');
         toast({
           title: "Yetkisiz Erişim",
           description: "Bu sayfaya erişim yetkiniz bulunmamaktadır.",
           variant: "destructive",
         });
         navigate('/');
+      } else {
+        console.log('Admin: User is admin, access granted');
       }
     } catch (error) {
       console.error('Auth check error:', error);

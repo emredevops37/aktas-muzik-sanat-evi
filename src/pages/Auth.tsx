@@ -279,8 +279,7 @@ const Auth = () => {
                 />
               </div>
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Şifreyi Güncelle
+                {loading ? "Güncelleniyor..." : "Şifreyi Güncelle"}
               </Button>
             </form>
           </CardContent>
@@ -341,8 +340,7 @@ const Auth = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Giriş Yap
+                    {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
                   </Button>
                 </form>
               )}
@@ -373,8 +371,7 @@ const Auth = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Kayıt Ol
+                    {loading ? "Kayıt olunuyor..." : "Kayıt Ol"}
                   </Button>
                 </form>
               )}
@@ -393,8 +390,7 @@ const Auth = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Şifre Sıfırlama Linki Gönder
+                    {loading ? "Gönderiliyor..." : "Şifre Sıfırlama Linki Gönder"}
                   </Button>
                   <p className="text-sm text-muted-foreground text-center">
                     Email adresinize şifre sıfırlama linki gönderilecek.

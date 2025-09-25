@@ -36,20 +36,20 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`${isMobile ? 'max-w-[95vw] w-full h-[95vh] overflow-hidden' : 'max-w-4xl w-full h-[90vh]'} p-0 fixed`}>
-        <DialogHeader className={`${isMobile ? 'p-4 pb-0' : 'p-6 pb-0'} flex-shrink-0`}>
-          <DialogTitle className={`font-heading ${isMobile ? 'text-lg' : 'text-2xl'} text-primary`}>
+      <DialogContent className={`${isMobile ? 'max-w-[95vw] w-full h-[95vh]' : 'max-w-4xl w-full h-[90vh]'} p-0 flex flex-col`}>
+        <DialogHeader className={`${isMobile ? 'p-3 pb-2' : 'p-6 pb-4'} flex-shrink-0 border-b border-border/50`}>
+          <DialogTitle className={`font-heading ${isMobile ? 'text-base' : 'text-2xl'} text-primary text-center`}>
             {title} Galerisi
           </DialogTitle>
         </DialogHeader>
 
-        <div className={`flex-1 flex flex-col ${isMobile ? 'h-full' : 'min-h-0'}`}>
+        <div className="flex-1 flex flex-col min-h-0">
           {/* Ana Resim */}
-          <div className={`relative ${isMobile ? 'h-[70vh]' : 'flex-1'} bg-muted rounded-lg ${isMobile ? 'mx-2 mb-2' : 'mx-6 mb-4'} overflow-hidden`}>
+          <div className={`relative flex-1 bg-muted/30 ${isMobile ? 'mx-2 mb-1' : 'mx-6 mb-4'} overflow-hidden flex items-center justify-center`}>
             <img
               src={images[currentImageIndex]?.src}
               alt={`${title} ${currentImageIndex + 1}`}
-              className="w-full h-full object-contain"
+              className={`${isMobile ? 'max-w-full max-h-full' : 'w-full h-full'} object-contain`}
             />
 
             {/* Navigasyon Butonları */}
@@ -94,16 +94,16 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
 
           {/* Thumbnail'lar */}
           {images.length > 1 && (
-            <div className={`${isMobile ? 'px-2 pb-2 flex-shrink-0' : 'px-6 pb-6'}`}>
-              <div className={`flex gap-1 overflow-x-auto pb-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 ${isMobile ? 'snap-x snap-mandatory max-h-12' : ''}`}>
+            <div className={`${isMobile ? 'px-2 pb-2 flex-shrink-0' : 'px-6 pb-6'} flex-shrink-0`}>
+              <div className={`flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 ${isMobile ? 'justify-start' : 'justify-center'}`}>
                 {images.map((image, index) => (
                   <button
                     key={`thumbnail-${index}`}
                     onClick={() => goToImage(index)}
-                    className={`flex-shrink-0 ${isMobile ? 'w-10 h-10 snap-center' : 'w-10 h-10'} rounded-md overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 ${isMobile ? 'w-12 h-12' : 'w-16 h-16'} rounded-lg overflow-hidden border-2 transition-all ${
                       index === currentImageIndex
-                        ? "border-primary shadow-lg scale-105"
-                        : "border-border hover:border-primary/50 hover:scale-105"
+                        ? "border-primary shadow-md"
+                        : "border-border/50 hover:border-primary/70"
                     }`}
                   >
                     <img
@@ -114,11 +114,6 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
                   </button>
                 ))}
               </div>
-              {isMobile && images.length > 10 && (
-                <p className="text-xs text-muted-foreground text-center mt-1">
-                  {currentImageIndex + 1}/{images.length} - Kaydırarak diğer resimleri görebilirsiniz
-                </p>
-              )}
             </div>
           )}
         </div>

@@ -36,20 +36,20 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`${isMobile ? 'max-w-[95vw] w-full h-[95vh]' : 'max-w-4xl w-full h-[90vh]'} p-0 flex flex-col`}>
+      <DialogContent className={`${isMobile ? 'max-w-[95vw] w-full h-[90vh]' : 'max-w-4xl w-full h-[90vh]'} p-0 flex flex-col`}>
         <DialogHeader className={`${isMobile ? 'p-3 pb-2' : 'p-6 pb-4'} flex-shrink-0 border-b border-border/50`}>
           <DialogTitle className={`font-heading ${isMobile ? 'text-base' : 'text-2xl'} text-primary text-center`}>
             {title} Galerisi
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
           {/* Ana Resim */}
-          <div className={`relative flex-1 bg-muted/30 ${isMobile ? 'mx-2 mb-1' : 'mx-6 mb-4'} overflow-hidden flex items-center justify-center`}>
+          <div className={`relative flex-1 bg-muted/30 ${isMobile ? 'mx-2 mb-1 min-h-0' : 'mx-6 mb-4'} overflow-hidden flex items-center justify-center`}>
             <img
               src={images[currentImageIndex]?.src}
               alt={`${title} ${currentImageIndex + 1}`}
-              className={`${isMobile ? 'max-w-full max-h-full' : 'w-full h-full'} object-contain`}
+              className="w-full h-full object-contain"
             />
 
             {/* Navigasyon Butonları */}
@@ -94,13 +94,13 @@ const Gallery = ({ isOpen, onClose, title, images }: GalleryProps) => {
 
           {/* Thumbnail'lar */}
           {images.length > 1 && (
-            <div className={`${isMobile ? 'px-2 pb-2 flex-shrink-0' : 'px-6 pb-6'} flex-shrink-0`}>
+            <div className={`${isMobile ? 'px-2 pb-3 flex-shrink-0' : 'px-6 pb-6'} flex-shrink-0`}>
               <div className={`flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 ${isMobile ? 'justify-start' : 'justify-center'}`}>
                 {images.map((image, index) => (
                   <button
                     key={`thumbnail-${index}`}
                     onClick={() => goToImage(index)}
-                    className={`flex-shrink-0 ${isMobile ? 'w-12 h-12' : 'w-16 h-16'} rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 ${isMobile ? 'w-14 h-14' : 'w-16 h-16'} rounded-lg overflow-hidden border-2 transition-all ${
                       index === currentImageIndex
                         ? "border-primary shadow-md"
                         : "border-border/50 hover:border-primary/70"
